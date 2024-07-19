@@ -34,13 +34,13 @@ class SnakeGame:
         title = Label(self.root, text="Select Difficulty Level", font=('Arial', 18, 'bold'), bg='#4d2600', fg='yellow', relief=GROOVE)
         title.pack(pady=20)
         
-        easy_btn = Button(self.root, text="Easy", command=lambda: self.start_game(speed=40), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
+        easy_btn = Button(self.root, text="Easy", command=lambda: self.start_game(speed=80), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
         easy_btn.pack(pady=10)
         
-        medium_btn = Button(self.root, text="Medium", command=lambda: self.start_game(speed=20), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
+        medium_btn = Button(self.root, text="Medium", command=lambda: self.start_game(speed=50), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
         medium_btn.pack(pady=10)
         
-        hard_btn = Button(self.root, text="Hard", command=lambda: self.start_game(speed=10), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
+        hard_btn = Button(self.root, text="Hard", command=lambda: self.start_game(speed=20), bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
         hard_btn.pack(pady=10)
         
         back_btn = Button(self.root, text="Back", command=self.main_menu, bg='#4d2600', fg='yellow', font=('Arial', 16, 'bold'))
@@ -77,6 +77,7 @@ class SnakeGame:
         self.root.update_idletasks()
 
         self.speed = speed
+        self.initial_speed = speed  # Store initial speed for reference
         self.dx = self.dy = self.snake_size
         self.direction = 'haut'
         self.flag = 0
@@ -143,6 +144,9 @@ class SnakeGame:
             self.Serpent.append([self.Serpent[-1][0], self.Serpent[-1][1]])
             self.score += 1
             self.score_label.config(text=f"Score: {self.score}")
+            # Increase speed every 3 points
+            if self.score % 3 == 0:
+                self.speed = max(10, self.speed - 5)  # Increase speed
 
         # Check for collisions with itself
         for segment in self.Serpent[1:]:
